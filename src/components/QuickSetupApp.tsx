@@ -26,6 +26,7 @@ export default function QuickSetupApp() {
   const [tab, setTab] = useState<Tab>("install");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [barCopied, setBarCopied] = useState(false);
+  const [promptCopied, setPromptCopied] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
 
   const counts = useMemo(() => {
@@ -51,6 +52,15 @@ export default function QuickSetupApp() {
     setBarCopied(true);
     toast.success("Script copiado!");
     setTimeout(() => setBarCopied(false), 2000);
+    showSupportCTA();
+  };
+
+  const handlePromptCopy = async () => {
+    if (!qs.scriptPrompt) return;
+    await navigator.clipboard.writeText(qs.scriptPrompt);
+    setPromptCopied(true);
+    toast.success("Prompt para IA copiado!");
+    setTimeout(() => setPromptCopied(false), 2000);
     showSupportCTA();
   };
 
@@ -461,6 +471,7 @@ export default function QuickSetupApp() {
                     scriptPs1={qs.scriptPs1}
                     scriptSh={qs.scriptSh}
                     scriptNix={qs.scriptNix}
+                    scriptPrompt={qs.scriptPrompt}
                     packageManager={qs.packageManager}
                     count={qs.selectedApps.length}
                     onAfterAction={showSupportCTA}
@@ -493,6 +504,7 @@ export default function QuickSetupApp() {
               scriptPs1={qs.scriptPs1}
               scriptSh={qs.scriptSh}
               scriptNix={qs.scriptNix}
+              scriptPrompt={qs.scriptPrompt}
               packageManager={qs.packageManager}
               count={qs.selectedApps.length}
               onAfterAction={showSupportCTA}
@@ -528,6 +540,18 @@ export default function QuickSetupApp() {
             >
               {shareCopied ? <Check className="h-4 w-4" /> : <Share2 className="h-4 w-4" />}
               <span className="hidden sm:inline">{shareCopied ? "Link copiado!" : "Compartilhar"}</span>
+            </button>
+            <button
+              onClick={handlePromptCopy}
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                promptCopied
+                  ? "bg-green-500 text-white shadow-sm shadow-green-200"
+                  : "bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200 shadow-sm"
+              }`}
+              title="Copiar prompt formatado para Agentes de IA"
+            >
+              {promptCopied ? <Check className="h-4 w-4" /> : <Sparkles className="h-4 w-4" />}
+              <span className="hidden sm:inline">{promptCopied ? "Prompt copiado!" : "Prompt IA"}</span>
             </button>
             <button
               onClick={handleBarCopy}

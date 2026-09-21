@@ -272,6 +272,58 @@ echo "Reinicie seu cliente (${activeProfile.name}) para ativar os servidores MCP
 `;
   }, [generateConfigObject, activeProfile]);
 
+  const generateAiPrompt = useCallback(() => {
+    const jsonToInclude = JSON.stringify(generateConfigObject(maskSecrets), null, 2);
+    const serverList = selectedServers
+      .map((s, idx) => {
+        const transportInfo = s.transport === "sse" ? "SSE (Remoto HTTP)" : `stdio (${s.command || "npx"})`;
+        const envInfo =
+          s.envVars && s.envVars.length > 0
+            ? `\n   - Variáveis: ${s.envVars.map((e) => e.key).join(", ")}`
+            : "";
+        return `${idx + 1}. **${s.name}** (\`${s.id}\`) — ${transportInfo}${envInfo}\n   ${s.description}`;
+      })
+      .join("\n\n");
+
+    return `# 🤖 Prompt de Configuração de Servidores MCP para Agente de IA
+
+Atue como um Engenheiro de DevOps e Especialista em IA. Por favor, configure e integre os servidores **Model Context Protocol (MCP)** listados abaixo no meu ambiente de desenvolvimento.
+
+---
+
+### 🎯 Destino da Configuração
+- **Cliente / IDE de Destino**: ${activeProfile.name}
+- **Arquivo de Configuração**: \`${activeProfile.configFileName}\`
+- **Caminho Padrão (Windows)**: \`${activeProfile.defaultPaths.windows}\`
+- **Caminho Padrão (macOS/Linux)**: \`${activeProfile.defaultPaths.linux}\`
+
+---
+
+### 📦 Servidores MCP Selecionados (${selectedServers.length} servidores)
+
+${serverList || "Nenhum servidor selecionado."}
+
+---
+
+### ⚙️ Estrutura de Configuração (JSON)
+
+Adicione ou mescle o bloco abaixo dentro da chave \`"mcpServers"\` do arquivo de configuração do cliente:
+
+\`\`\`json
+${jsonToInclude}
+\`\`\`
+
+---
+
+### 📋 Instruções de Execução
+1. **Preservação de Dados Existentes**: Se o arquivo de configuração já existir, faça o **merge defensivo** das chaves em \`"mcpServers"\`, garantindo que servidores já configurados anteriormente **não** sejam apagados ou sobrescritos.
+2. **Criação de Diretório**: Certifique-se de que a pasta pai do arquivo de configuração exista. Se não existir, crie-a recursivamente.
+3. **Credenciais & Tokens**: Onde houver valores de token entre \`<...>\` (ou placeholders com \`...\`), certifique-se de preencher com o token real ou instrua exatamente onde obtê-lo.
+4. **Dependências de Sistema**: Verifique se o Node.js (\`npx\`) e Docker (caso aplicável para contêineres como GitHub MCP) estão instalados e disponíveis no PATH do sistema.
+5. **Ativação**: Confirme a escrita do arquivo e instrua a reiniciar o **${activeProfile.name}** para que as novas ferramentas e conectores MCP fiquem disponíveis.
+`;
+  }, [selectedServers, activeProfile, generateConfigObject, maskSecrets]);
+
   const downloadConfigFile = useCallback(() => {
     const jsonStr = JSON.stringify(generateConfigObject(false), null, 2);
     const blob = new Blob([jsonStr], { type: "application/json;charset=utf-8" });
@@ -307,6 +359,7 @@ echo "Reinicie seu cliente (${activeProfile.name}) para ativar os servidores MCP
     configJson,
     generatePowerShellScript,
     generateBashScript,
+    generateAiPrompt,
     downloadConfigFile,
   };
 }

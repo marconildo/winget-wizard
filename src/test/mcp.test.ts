@@ -10,6 +10,16 @@ describe("MCP Catalog", () => {
     expect(serverIds).toContain("supabase-mcp-server");
     expect(serverIds).toContain("figma-mcp-server");
     expect(serverIds).toContain("mercadopago-mcp-server");
+    expect(serverIds).toContain("cloudflare-mcp-server");
+    expect(serverIds).toContain("sentry-mcp-server");
+    expect(serverIds).toContain("neon-mcp-server");
+    expect(serverIds).toContain("sqlite-mcp-server");
+    expect(serverIds).toContain("redis-mcp-server");
+    expect(serverIds).toContain("fetch-mcp-server");
+    expect(serverIds).toContain("memory-mcp-server");
+    expect(serverIds).toContain("linear-mcp-server");
+    expect(serverIds).toContain("slack-mcp-server");
+    expect(serverIds).toContain("jam");
   });
 
   it("should have valid client profiles for Gemini, Claude, Cursor, Windsurf and Cline", () => {
@@ -99,6 +109,14 @@ describe("useMcpSetup Hook", () => {
     expect(result.current.selectedIds.has("github-mcp-server")).toBe(true);
     expect(result.current.selectedIds.has("puppeteer-mcp-server")).toBe(true);
     expect(result.current.selectedIds.has("postgres-mcp-server")).toBe(false);
+
+    act(() => {
+      result.current.applyPreset("edge-cloudflare");
+    });
+
+    expect(result.current.selectedIds.has("cloudflare-mcp-server")).toBe(true);
+    expect(result.current.selectedIds.has("supabase-mcp-server")).toBe(true);
+    expect(result.current.selectedIds.has("fetch-mcp-server")).toBe(true);
   });
 
   it("generates PowerShell and Bash scripts with target paths", () => {
@@ -123,5 +141,15 @@ describe("useMcpSetup Hook", () => {
     const parsed = JSON.parse(result.current.configJson);
     expect(parsed.mcpServers["github-mcp-server"]).toHaveProperty("disabled", false);
     expect(parsed.mcpServers["github-mcp-server"]).toHaveProperty("autoApprove");
+  });
+
+  it("generates structured AI instructions prompt", () => {
+    const { result } = renderHook(() => useMcpSetup());
+
+    const prompt = result.current.generateAiPrompt();
+    expect(prompt).toContain("Prompt de Configuração de Servidores MCP para Agente de IA");
+    expect(prompt).toContain("mcpServers");
+    expect(prompt).toContain("merge defensivo");
+    expect(prompt).toContain(result.current.activeProfile.configFileName);
   });
 });

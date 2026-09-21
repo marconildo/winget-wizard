@@ -372,19 +372,31 @@ export function useQuickSetup() {
 
   useEffect(() => {
     setSelectedIds((prev) => {
+      let changed = false;
       const next = new Set<string>();
       for (const id of prev) {
         const app = knownAppsById.get(id);
-        if (app && isAppAvailable(app)) next.add(id);
+        if (app && isAppAvailable(app)) {
+          next.add(id);
+        } else {
+          changed = true;
+        }
       }
+      if (!changed && next.size === prev.size) return prev;
       return next;
     });
 
     setSelectedMeta((prev) => {
+      let changed = false;
       const next: Record<string, SetupApp> = {};
       for (const [id, app] of Object.entries(prev)) {
-        if (isAppAvailable(app)) next[id] = app;
+        if (isAppAvailable(app)) {
+          next[id] = app;
+        } else {
+          changed = true;
+        }
       }
+      if (!changed && Object.keys(next).length === Object.keys(prev).length) return prev;
       return next;
     });
   }, [packageManager, knownAppsById, isAppAvailable]);
@@ -531,6 +543,70 @@ ${pkgLines}
 }`;
   }, [packageManager, selectedApps]);
 
+  const scriptPrompt = useMemo(() => {
+    if (!script || selectedApps.length === 0) return "";
+    const platformLabel =
+      platform === "windows" ? "Windows" : platform === "macos" ? "macOS" : `Linux (${linuxDistro})`;
+    const managerLabel =
+      packageManager === "winget"
+        ? "Winget (Windows Package Manager)"
+        : packageManager === "brew"
+        ? "Homebrew"
+        : packageManager === "apt"
+        ? "APT (Debian/Ubuntu)"
+        : packageManager === "dnf"
+        ? "DNF (Fedora/RHEL)"
+        : packageManager === "pacman"
+        ? "Pacman (Arch Linux)"
+        : packageManager === "flatpak"
+        ? "Flatpak (Flathub)"
+        : "Nix Package Manager";
+
+    const appList = selectedApps
+      .map((app, index) => {
+        const pkg = getAppPackage(app, packageManager) || app.id;
+        return `${index + 1}. **${app.name}** (\`${pkg}\`)`;
+      })
+      .join("\n");
+
+    const codeSnippet = packageManager === "nix" ? scriptNix : script;
+    const scriptLang = packageManager === "winget" ? "powershell" : packageManager === "nix" ? "nix" : "bash";
+
+    return `# 🤖 Prompt de Instalação de Aplicativos para Agente de IA
+
+Atue como um Especialista em Automação e Suporte de TI. Por favor, execute a instalação automatizada dos aplicativos listados abaixo no meu sistema operacional.
+
+---
+
+### 💻 Ambiente Alvo
+- **Sistema Operacional**: ${platformLabel}
+- **Gerenciador de Pacotes**: ${managerLabel}
+- **Total de Aplicativos**: ${selectedApps.length}
+
+---
+
+### 📦 Aplicativos a Serem Instalados
+${appList}
+
+---
+
+### ⚡ Script de Instalação em Lote
+Execute o seguinte comando/script no terminal da máquina:
+
+\`\`\`${scriptLang}
+${codeSnippet}
+\`\`\`
+
+---
+
+### 📋 Instruções de Execução para o Agente:
+1. **Verificação Prévia**: Verifique se o gerenciador \`${packageManager}\` está instalado e acessível no PATH do terminal antes de iniciar.
+2. **Execução Não-Interativa**: Execute a instalação em modo silencioso/automático, sem pausar para confirmação manual.
+3. **Resiliência**: Se um dos aplicativos já estiver instalado na máquina, registre o aviso e continue imediatamente a instalação dos próximos itens.
+4. **Relatório Final**: Ao término, exiba uma lista clara indicando quais aplicativos foram instalados com sucesso ou se algum apresentou erro.
+`;
+  }, [script, selectedApps, platform, linuxDistro, packageManager, scriptNix]);
+
   return {
     search, setSearch,
     activeCategory, setActiveCategory,
@@ -546,7 +622,7 @@ ${pkgLines}
     platform, setPlatform,
     linuxDistro, setLinuxDistro,
     packageManager,
-    script, scriptBat, scriptPs1, scriptSh, scriptNix,
+    script, scriptBat, scriptPs1, scriptSh, scriptNix, scriptPrompt,
     generateCommand,
     isAppAvailable,
     getAppPackage: (app: SetupApp) => getAppPackage(app, packageManager),

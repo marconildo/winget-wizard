@@ -29,6 +29,11 @@ import {
   ShieldCheck,
   Zap,
   Info,
+  Cloud,
+  Activity,
+  Bug,
+  Brain,
+  MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,6 +60,13 @@ const serverIconMap: Record<string, React.ReactNode> = {
   Box: <Box className="h-5 w-5" />,
   Globe: <Globe className="h-5 w-5" />,
   GitBranch: <GitBranch className="h-5 w-5" />,
+  Cloud: <Cloud className="h-5 w-5" />,
+  Activity: <Activity className="h-5 w-5" />,
+  Bug: <Bug className="h-5 w-5" />,
+  Brain: <Brain className="h-5 w-5" />,
+  MessageSquare: <MessageSquare className="h-5 w-5" />,
+  CheckSquare: <CheckSquare className="h-5 w-5" />,
+  Zap: <Zap className="h-5 w-5" />,
 };
 
 const clientIconMap: Record<McpClientProfile, React.ReactNode> = {
@@ -69,7 +81,7 @@ export function McpTab() {
   const mcp = useMcpSetup();
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedScript, setCopiedScript] = useState(false);
-  const [previewTab, setPreviewTab] = useState<"json" | "powershell" | "bash">("json");
+  const [previewTab, setPreviewTab] = useState<"json" | "powershell" | "bash" | "prompt">("json");
   const [expandedConfigs, setExpandedConfigs] = useState<Record<string, boolean>>({});
 
   const toggleExpand = (id: string) => {
@@ -82,13 +94,17 @@ export function McpTab() {
         ? mcp.configJson
         : previewTab === "powershell"
         ? mcp.generatePowerShellScript()
-        : mcp.generateBashScript();
+        : previewTab === "bash"
+        ? mcp.generateBashScript()
+        : mcp.generateAiPrompt();
 
     await navigator.clipboard.writeText(textToCopy);
     setCopiedCode(true);
     toast.success(
       previewTab === "json"
         ? `Configuração (${mcp.activeProfile.configFileName}) copiada!`
+        : previewTab === "prompt"
+        ? "Prompt para IA copiado!"
         : `Script de instalação (${previewTab}) copiado!`
     );
     setTimeout(() => setCopiedCode(false), 2000);
@@ -183,7 +199,7 @@ export function McpTab() {
               className="flex items-start gap-3 p-3 rounded-xl border border-border/70 bg-card hover:bg-accent/40 hover:border-primary/40 transition-all text-left group"
             >
               <div className="h-8 w-8 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                <Sparkles className="h-4 w-4" />
+                {serverIconMap[preset.icon] || <Sparkles className="h-4 w-4" />}
               </div>
               <div className="min-w-0 flex-1">
                 <div className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">
@@ -467,9 +483,19 @@ export function McpTab() {
                   >
                     <Terminal className="h-3 w-3 inline mr-1" /> Bash (.sh)
                   </button>
+                  <button
+                    onClick={() => setPreviewTab("prompt")}
+                    className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
+                      previewTab === "prompt"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <Sparkles className="h-3 w-3 inline mr-1" /> Prompt
+                  </button>
                 </div>
 
-                {previewTab === "json" && (
+                {(previewTab === "json" || previewTab === "prompt") && (
                   <button
                     onClick={() => mcp.setMaskSecrets(!mcp.maskSecrets)}
                     className="text-[11px] text-muted-foreground hover:text-foreground flex items-center gap-1 font-medium transition-colors"
@@ -491,12 +517,14 @@ export function McpTab() {
 
             {/* Code Body */}
             <div className="relative p-4 bg-slate-950 font-mono text-xs text-slate-200 overflow-x-auto max-h-[460px] scrollbar-thin">
-              <pre className="leading-relaxed">
+              <pre className="leading-relaxed whitespace-pre-wrap">
                 {previewTab === "json"
                   ? mcp.configJson
                   : previewTab === "powershell"
                   ? mcp.generatePowerShellScript()
-                  : mcp.generateBashScript()}
+                  : previewTab === "bash"
+                  ? mcp.generateBashScript()
+                  : mcp.generateAiPrompt()}
               </pre>
             </div>
 
@@ -507,7 +535,13 @@ export function McpTab() {
                 className="flex-1 gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
               >
                 {copiedCode ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                {copiedCode ? "Copiado!" : previewTab === "json" ? "Copiar JSON" : "Copiar Script"}
+                {copiedCode
+                  ? "Copiado!"
+                  : previewTab === "json"
+                  ? "Copiar JSON"
+                  : previewTab === "prompt"
+                  ? "Copiar Prompt para IA"
+                  : "Copiar Script"}
               </Button>
               {previewTab === "json" && (
                 <Button
