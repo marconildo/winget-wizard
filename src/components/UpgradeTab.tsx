@@ -170,10 +170,10 @@ export function UpgradeTab({ platform, linuxDistro, onPlatformChange, onLinuxDis
 
       <div className="space-y-3">
         <h3 className="text-sm font-semibold">Comando gerado ({packageManager})</h3>
-        <pre className="bg-primary text-primary-foreground text-sm p-4 rounded-lg font-mono">
+        <pre className="bg-palette-obsidian text-palette-aqua text-sm p-4 rounded-lg font-mono border border-palette-mahogany">
           {upgradeCommand || "Informe um pacote específico para gerar o comando."}
         </pre>
-        <Button size="sm" disabled={!upgradeCommand} onClick={() => copy(upgradeCommand, "command")} className="gap-1.5 bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+        <Button size="sm" disabled={!upgradeCommand} onClick={() => copy(upgradeCommand, "command")} variant="cyan" className="gap-1.5 font-semibold">
           {copiedAll ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
           {copiedAll ? "Copiado" : "Copiar comando"}
         </Button>
@@ -181,11 +181,11 @@ export function UpgradeTab({ platform, linuxDistro, onPlatformChange, onLinuxDis
 
       <div className="space-y-3">
         <h3 className="text-sm font-semibold">Script completo</h3>
-        <pre className="bg-primary text-primary-foreground text-sm p-4 rounded-lg font-mono whitespace-pre-wrap">
+        <pre className="bg-palette-obsidian text-palette-aqua text-sm p-4 rounded-lg font-mono whitespace-pre-wrap border border-palette-mahogany">
           {upgradeScript || "Nenhum script gerado."}
         </pre>
         <div className="flex items-center gap-2">
-          <Button size="sm" disabled={!upgradeScript} onClick={() => copy(upgradeScript, "script")} className="gap-1.5 bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+          <Button size="sm" disabled={!upgradeScript} onClick={() => copy(upgradeScript, "script")} variant="cyan" className="gap-1.5 font-semibold">
             {copiedScript ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
             {copiedScript ? "Copiado" : "Copiar script"}
           </Button>

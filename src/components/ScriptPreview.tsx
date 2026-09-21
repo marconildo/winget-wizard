@@ -74,22 +74,22 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
       {/* Terminal header */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
-          <Terminal className="h-4 w-4 text-green-400" />
+          <Terminal className="h-4 w-4 text-palette-aqua" />
           <span className="text-sm font-semibold text-gray-200">Script gerado</span>
-          <span className="text-xs bg-gray-700 text-green-400 font-mono px-2 py-0.5 rounded-full border border-gray-600">
+          <span className="text-xs bg-palette-mahogany/90 text-palette-aqua font-mono px-2 py-0.5 rounded-full border border-palette-mahogany">
             {count} {count === 1 ? "app" : "apps"}
           </span>
         </div>
 
         {/* View mode toggle (Script vs Prompt IA) */}
         <div className="flex items-center gap-1.5">
-          <div className="flex rounded-lg bg-gray-800 p-0.5 border border-gray-700">
+          <div className="flex rounded-lg bg-palette-obsidian p-0.5 border border-palette-mahogany/80">
             <button
               onClick={() => setViewMode("script")}
               className={cn(
-                "px-2 py-1 text-xs font-semibold rounded-md transition-all",
+                "px-2.5 py-1 text-xs font-semibold rounded-md transition-all",
                 viewMode === "script"
-                  ? "bg-gray-700 text-white shadow-sm"
+                  ? "bg-palette-mahogany text-white shadow-sm border border-palette-mahogany/90"
                   : "text-gray-400 hover:text-gray-200"
               )}
             >
@@ -98,9 +98,9 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
             <button
               onClick={() => setViewMode("prompt")}
               className={cn(
-                "px-2 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1",
+                "px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1",
                 viewMode === "prompt"
-                  ? "bg-blue-600 text-white shadow-sm"
+                  ? "bg-palette-orange text-white shadow-sm shadow-palette-orange/30 font-bold"
                   : "text-gray-400 hover:text-gray-200"
               )}
             >
@@ -113,8 +113,8 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
             className={cn(
               "flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md font-medium transition-all duration-200",
               copied
-                ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                : "bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600 hover:text-white"
+                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                : "bg-palette-mahogany/80 text-gray-300 border border-palette-mahogany hover:bg-palette-mahogany hover:text-white"
             )}
             title={viewMode === "prompt" ? "Copiar prompt para IA" : "Copiar script"}
           >
@@ -125,19 +125,19 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
       </div>
 
       {/* Terminal window */}
-      <div className="relative rounded-xl overflow-hidden border border-gray-700 shadow-xl">
+      <div className="relative rounded-xl overflow-hidden border border-palette-mahogany/80 shadow-2xl bg-palette-obsidian">
         {/* Window chrome */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-gray-800 border-b border-gray-700">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-palette-mahogany/90 border-b border-palette-mahogany">
           <div className="flex items-center gap-1.5">
             <span className="h-3 w-3 rounded-full bg-red-500/80" />
             <span className="h-3 w-3 rounded-full bg-yellow-500/80" />
             <span className="h-3 w-3 rounded-full bg-green-500/80" />
-            <span className="ml-2 text-xs text-gray-400 font-mono">
+            <span className="ml-2 text-xs text-palette-aqua/80 font-mono">
               {viewMode === "prompt" ? "prompt-instalacao.md" : terminalFile}
             </span>
           </div>
           {viewMode === "prompt" && (
-            <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-md font-mono border border-blue-500/30">
+            <span className="text-[10px] bg-palette-orange/20 text-palette-orange px-2 py-0.5 rounded-md font-mono border border-palette-orange/40 font-semibold">
               Instruções para Agente
             </span>
           )}
@@ -145,8 +145,8 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
         <pre
           ref={preRef}
           className={cn(
-            "bg-gray-900 text-xs p-5 overflow-auto max-h-72 scrollbar-thin font-mono leading-relaxed whitespace-pre-wrap",
-            viewMode === "prompt" ? "text-slate-200" : "text-green-400"
+            "bg-palette-obsidian text-xs p-5 overflow-auto max-h-72 scrollbar-thin font-mono leading-relaxed whitespace-pre-wrap selection:bg-palette-aqua/20 selection:text-palette-aqua",
+            viewMode === "prompt" ? "text-amber-100/90" : "text-palette-aqua"
           )}
         >
           {viewMode === "prompt" ? (scriptPrompt || "Nenhum prompt disponível.") : isNix ? scriptNix : script}
@@ -162,7 +162,7 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
                 onClick={() => download(scriptBat, "quicksetup.bat")}
                 variant="outline"
                 size="sm"
-                className="text-xs gap-1.5 border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white hover:border-gray-600"
+                className="text-xs gap-1.5 border-palette-mahogany bg-palette-mahogany/60 text-gray-300 hover:bg-palette-mahogany hover:text-white"
               >
                 <Download className="h-3.5 w-3.5" />
                 Baixar .bat
@@ -171,7 +171,7 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
                 onClick={() => download(scriptPs1, "quicksetup.ps1")}
                 variant="outline"
                 size="sm"
-                className="text-xs gap-1.5 border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white hover:border-gray-600"
+                className="text-xs gap-1.5 border-palette-mahogany bg-palette-mahogany/60 text-gray-300 hover:bg-palette-mahogany hover:text-white"
               >
                 <Download className="h-3.5 w-3.5" />
                 Baixar .ps1
@@ -182,7 +182,7 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
               onClick={() => download(scriptNix, "shell.nix")}
               variant="outline"
               size="sm"
-              className="w-full text-xs gap-1.5 border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white hover:border-gray-600"
+              className="w-full text-xs gap-1.5 border-palette-mahogany bg-palette-mahogany/60 text-gray-300 hover:bg-palette-mahogany hover:text-white"
             >
               <Download className="h-3.5 w-3.5" />
               Baixar shell.nix
@@ -192,7 +192,7 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
               onClick={() => download(scriptSh, "quicksetup.sh")}
               variant="outline"
               size="sm"
-              className="w-full text-xs gap-1.5 border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white hover:border-gray-600"
+              className="w-full text-xs gap-1.5 border-palette-mahogany bg-palette-mahogany/60 text-gray-300 hover:bg-palette-mahogany hover:text-white"
             >
               <Download className="h-3.5 w-3.5" />
               Baixar .sh
@@ -202,21 +202,20 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <Button
               onClick={copyPromptDirectly}
-              variant="outline"
+              variant="outlineSolar"
               size="sm"
-              className="text-xs font-semibold gap-1.5 border-blue-500/40 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 hover:border-blue-500/60"
+              className="text-xs font-semibold gap-1.5"
             >
-              <Sparkles className="h-3.5 w-3.5 text-blue-400" />
+              <Sparkles className="h-3.5 w-3.5" />
               Prompt IA
             </Button>
             <Button
               onClick={copy}
+              variant={copied ? "default" : "cyan"}
               size="sm"
               className={cn(
                 "text-xs font-semibold gap-2 transition-all duration-200",
-                copied
-                  ? "bg-green-600 hover:bg-green-700 text-white"
-                  : "bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-900/40"
+                copied && "bg-emerald-600 hover:bg-emerald-700 text-white"
               )}
             >
               {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
@@ -228,12 +227,11 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
         <div className="space-y-2">
           <Button
             onClick={copyPromptDirectly}
+            variant={copied ? "default" : "solar"}
             size="sm"
             className={cn(
               "w-full text-sm font-semibold gap-2 transition-all duration-200",
-              copied
-                ? "bg-green-600 hover:bg-green-700 text-white"
-                : "bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-900/40"
+              copied && "bg-emerald-600 hover:bg-emerald-700 text-white"
             )}
           >
             {copied ? <Check className="h-4 w-4" /> : <Sparkles className="h-4 w-4" />}
@@ -243,7 +241,7 @@ export function ScriptPreview({ script, scriptBat, scriptPs1, scriptSh, scriptNi
             onClick={() => download(scriptPrompt || "", "prompt-instalacao.md")}
             variant="outline"
             size="sm"
-            className="w-full text-xs gap-1.5 border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
+            className="w-full text-xs gap-1.5 border-palette-mahogany bg-palette-mahogany/60 text-gray-300 hover:bg-palette-mahogany hover:text-white"
           >
             <Download className="h-3.5 w-3.5" />
             Baixar Prompt (.md)

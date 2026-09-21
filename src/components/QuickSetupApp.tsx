@@ -98,7 +98,7 @@ export default function QuickSetupApp() {
       `}>
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
-          <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+          <div className="h-8 w-8 rounded-lg bg-palette-cyan/20 flex items-center justify-center border border-palette-cyan/30">
             <img src={logo} alt="QuickSetup" className="h-6 w-6" width={24} height={24} />
           </div>
           <div>
@@ -116,7 +116,7 @@ export default function QuickSetupApp() {
             onClick={() => setTab("install")}
             className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 ${
               tab === "install"
-                ? "bg-blue-500/20 text-blue-300 shadow-inner"
+                ? "bg-palette-mahogany text-palette-aqua shadow-inner border border-palette-mahogany/80 font-bold"
                 : "text-sidebar-foreground/70 hover:bg-white/8 hover:text-sidebar-foreground"
             }`}
           >
@@ -126,7 +126,7 @@ export default function QuickSetupApp() {
             onClick={() => setTab("upgrade")}
             className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 ${
               tab === "upgrade"
-                ? "bg-blue-500/20 text-blue-300 shadow-inner"
+                ? "bg-palette-mahogany text-palette-aqua shadow-inner border border-palette-mahogany/80 font-bold"
                 : "text-sidebar-foreground/70 hover:bg-white/8 hover:text-sidebar-foreground"
             }`}
           >
@@ -136,7 +136,7 @@ export default function QuickSetupApp() {
             onClick={() => setTab("os-catalog")}
             className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 ${
               tab === "os-catalog"
-                ? "bg-blue-500/20 text-blue-300 shadow-inner"
+                ? "bg-palette-mahogany text-palette-aqua shadow-inner border border-palette-mahogany/80 font-bold"
                 : "text-sidebar-foreground/70 hover:bg-white/8 hover:text-sidebar-foreground"
             }`}
           >
@@ -146,11 +146,11 @@ export default function QuickSetupApp() {
             onClick={() => setTab("mcp")}
             className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 ${
               tab === "mcp"
-                ? "bg-blue-500/20 text-blue-300 shadow-inner"
+                ? "bg-palette-mahogany text-palette-orange shadow-inner border border-palette-mahogany/80 font-bold"
                 : "text-sidebar-foreground/70 hover:bg-white/8 hover:text-sidebar-foreground"
             }`}
           >
-            <Sparkles className="h-3.5 w-3.5" /> MCP
+            <Zap className="h-3.5 w-3.5 text-palette-orange" /> MCP
           </button>
         </div>
 
@@ -200,7 +200,9 @@ export default function QuickSetupApp() {
                 <button
                   onClick={() => qs.setPlatform("windows")}
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${
-                    qs.platform === "windows" ? "bg-white text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    qs.platform === "windows"
+                      ? "bg-white text-palette-cyan shadow-sm border border-palette-cyan/30 font-bold"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <Monitor className="h-3.5 w-3.5" /> Windows
@@ -208,7 +210,9 @@ export default function QuickSetupApp() {
                 <button
                   onClick={() => qs.setPlatform("macos")}
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${
-                    qs.platform === "macos" ? "bg-white text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    qs.platform === "macos"
+                      ? "bg-white text-palette-cyan shadow-sm border border-palette-cyan/30 font-bold"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <Apple className="h-3.5 w-3.5" /> MacOS
@@ -216,7 +220,9 @@ export default function QuickSetupApp() {
                 <button
                   onClick={() => qs.setPlatform("linux")}
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${
-                    qs.platform === "linux" ? "bg-white text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    qs.platform === "linux"
+                      ? "bg-white text-palette-cyan shadow-sm border border-palette-cyan/30 font-bold"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <Terminal className="h-3.5 w-3.5" /> Linux
@@ -459,10 +465,10 @@ export default function QuickSetupApp() {
               </main>
 
               {/* Script Panel — sidebar right */}
-              <aside className="hidden lg:flex w-80 xl:w-96 border-l border-border/60 bg-gray-950 flex-col overflow-auto scrollbar-thin">
+              <aside className="hidden lg:flex w-80 xl:w-96 border-l border-palette-mahogany/80 bg-palette-obsidian flex-col overflow-auto scrollbar-thin">
                 {/* Panel header */}
-                <div className="px-5 pt-5 pb-4 border-b border-gray-800">
-                  <h2 className="text-xs uppercase tracking-widest font-semibold text-gray-500">Painel do Script</h2>
+                <div className="px-5 pt-5 pb-4 border-b border-palette-mahogany/80">
+                  <h2 className="text-xs uppercase tracking-widest font-semibold text-palette-aqua/70">Painel do Script</h2>
                 </div>
                 <div className="flex-1 p-5">
                   <ScriptPreview
@@ -497,7 +503,7 @@ export default function QuickSetupApp() {
 
         {/* Mobile script panel */}
         {tab === "install" && qs.selectedApps.length > 0 && (
-          <div className="lg:hidden border-t border-border/60 bg-gray-950 p-4">
+          <div className="lg:hidden border-t border-palette-mahogany/80 bg-palette-obsidian p-4">
             <ScriptPreview
               script={qs.script}
               scriptBat={qs.scriptBat}
@@ -521,7 +527,7 @@ export default function QuickSetupApp() {
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 lg:left-[calc(50%+8rem)] lg:-translate-x-1/2">
           <div className="flex items-center gap-3 bg-white border border-border shadow-2xl shadow-black/15 rounded-2xl px-4 py-3">
             <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <div className="h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-palette-cyan flex items-center justify-center shadow-sm shadow-palette-cyan/40">
                 <span className="text-[11px] text-white font-bold">{qs.selectedApps.length}</span>
               </div>
               <span>
@@ -533,8 +539,8 @@ export default function QuickSetupApp() {
               onClick={handleShare}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                 shareCopied
-                  ? "bg-green-500 text-white shadow-sm shadow-green-200"
-                  : "bg-muted text-muted-foreground hover:bg-blue-50 hover:text-blue-600 border border-border"
+                  ? "bg-emerald-500 text-white shadow-sm shadow-emerald-200"
+                  : "bg-muted text-muted-foreground hover:bg-palette-cyan/10 hover:text-palette-cyan border border-border"
               }`}
               title="Copiar link de compartilhamento"
             >
@@ -545,8 +551,8 @@ export default function QuickSetupApp() {
               onClick={handlePromptCopy}
               className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                 promptCopied
-                  ? "bg-green-500 text-white shadow-sm shadow-green-200"
-                  : "bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200 shadow-sm"
+                  ? "bg-emerald-500 text-white shadow-sm shadow-emerald-200"
+                  : "bg-palette-orange text-white hover:bg-palette-orange/90 shadow-sm shadow-palette-orange/30 border border-palette-orange/40"
               }`}
               title="Copiar prompt formatado para Agentes de IA"
             >
@@ -557,8 +563,8 @@ export default function QuickSetupApp() {
               onClick={handleBarCopy}
               className={`flex items-center gap-2 px-4 py-1.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                 barCopied
-                  ? "bg-green-500 text-white shadow-sm shadow-green-200"
-                  : "bg-blue-600 text-white hover:bg-blue-700 shadow-sm shadow-blue-200"
+                  ? "bg-emerald-500 text-white shadow-sm shadow-emerald-200"
+                  : "bg-palette-cyan text-white hover:bg-palette-aqua shadow-sm shadow-palette-cyan/30"
               }`}
             >
               {barCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}

@@ -53,7 +53,7 @@ export function SetupHistoryPanel({ history, currentIds, currentPlatform, curren
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSave()}
-          className="h-7 text-xs bg-white/5 border-white/10 text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:border-blue-400/50"
+          className="h-7 text-xs bg-white/5 border-white/10 text-sidebar-foreground placeholder:text-sidebar-foreground/30 focus:border-palette-cyan/60"
         />
         <Button
           size="sm"
@@ -87,7 +87,7 @@ export function SetupHistoryPanel({ history, currentIds, currentPlatform, curren
               <button
                 onClick={() => onLoad(entry)}
                 className={cn(
-                  "p-1 rounded text-sidebar-foreground/50 hover:text-blue-300 hover:bg-blue-500/20 transition-colors shrink-0",
+                  "p-1 rounded text-sidebar-foreground/50 hover:text-palette-aqua hover:bg-palette-cyan/20 transition-colors shrink-0",
                   "opacity-0 group-hover:opacity-100"
                 )}
                 title="Carregar setup"

@@ -294,7 +294,7 @@ export function McpTab() {
                   key={server.id}
                   className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                     isSelected
-                      ? "bg-card border-blue-500/50 shadow-md shadow-blue-500/5 ring-1 ring-blue-500/30"
+                      ? "bg-card border-palette-cyan/60 shadow-md shadow-palette-cyan/5 ring-1 ring-palette-aqua/30"
                       : "bg-card/70 border-border/70 hover:border-border hover:bg-card"
                   }`}
                 >
@@ -305,7 +305,7 @@ export function McpTab() {
                           onClick={() => mcp.toggleServer(server.id)}
                           className={`h-11 w-11 rounded-xl flex items-center justify-center shrink-0 cursor-pointer transition-all ${
                             isSelected
-                              ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 scale-105"
+                              ? "bg-palette-cyan text-white shadow-md shadow-palette-cyan/30 scale-105"
                               : "bg-muted text-muted-foreground hover:bg-muted/80"
                           }`}
                         >
@@ -324,8 +324,8 @@ export function McpTab() {
                               variant="secondary"
                               className={`text-[10px] px-1.5 py-0 uppercase tracking-wide font-mono ${
                                 server.transport === "sse"
-                                  ? "bg-amber-500/10 text-amber-500 border border-amber-500/20"
-                                  : "bg-blue-500/10 text-blue-500 border border-blue-500/20"
+                                  ? "bg-palette-orange/15 text-palette-orange border border-palette-orange/30 font-bold"
+                                  : "bg-palette-cyan/15 text-palette-cyan border border-palette-cyan/30"
                               }`}
                             >
                               {server.transport.toUpperCase()}
@@ -359,7 +359,7 @@ export function McpTab() {
                           onClick={() => mcp.toggleServer(server.id)}
                           className={`h-7 px-3 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
                             isSelected
-                              ? "bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                              ? "bg-palette-cyan hover:bg-palette-aqua text-white shadow-sm"
                               : "bg-secondary hover:bg-secondary/80 text-secondary-foreground"
                           }`}
                         >
@@ -375,7 +375,7 @@ export function McpTab() {
                         {hasEnv && (
                           <button
                             onClick={() => toggleExpand(server.id)}
-                            className="text-[11px] text-blue-400 hover:underline flex items-center gap-1 font-medium"
+                            className="text-[11px] text-palette-cyan hover:underline flex items-center gap-1 font-medium"
                           >
                             <Key className="h-3 w-3" />
                             {isExpanded ? "Ocultar Chaves" : "Configurar Chaves"}
@@ -444,7 +444,7 @@ export function McpTab() {
                 title="Clique para copiar caminho"
               >
                 <div className="truncate flex items-center gap-1.5">
-                  <Folder className="h-3 w-3 text-blue-400 shrink-0" />
+                  <Folder className="h-3 w-3 text-palette-cyan shrink-0" />
                   <span className="truncate">{mcp.activeProfile.defaultPaths.windows}</span>
                 </div>
                 <Copy className="h-3 w-3 shrink-0 opacity-60 group-hover:opacity-100" />
@@ -516,8 +516,8 @@ export function McpTab() {
             </div>
 
             {/* Code Body */}
-            <div className="relative p-4 bg-slate-950 font-mono text-xs text-slate-200 overflow-x-auto max-h-[460px] scrollbar-thin">
-              <pre className="leading-relaxed whitespace-pre-wrap">
+            <div className="relative p-4 bg-palette-obsidian font-mono text-xs text-palette-aqua/90 overflow-x-auto max-h-[460px] scrollbar-thin border-t border-palette-mahogany/80">
+              <pre className="leading-relaxed whitespace-pre-wrap selection:bg-palette-aqua/20 selection:text-palette-aqua">
                 {previewTab === "json"
                   ? mcp.configJson
                   : previewTab === "powershell"
@@ -532,7 +532,8 @@ export function McpTab() {
             <div className="p-4 border-t border-border bg-muted/20 flex flex-col sm:flex-row gap-2">
               <Button
                 onClick={handleCopyCode}
-                className="flex-1 gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                variant={previewTab === "prompt" ? "solar" : "cyan"}
+                className="flex-1 gap-2 font-semibold"
               >
                 {copiedCode ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                 {copiedCode
@@ -558,7 +559,7 @@ export function McpTab() {
           {/* Quick instructions card */}
           <div className="p-4 rounded-xl border border-border/80 bg-card/60 text-xs space-y-2 text-muted-foreground">
             <div className="flex items-center gap-1.5 font-semibold text-foreground">
-              <Info className="h-3.5 w-3.5 text-blue-400" /> Como aplicar no {mcp.activeProfile.name}:
+              <Info className="h-3.5 w-3.5 text-palette-cyan" /> Como aplicar no {mcp.activeProfile.name}:
             </div>
             <ol className="list-decimal list-inside space-y-1 text-[11px] leading-relaxed">
               <li>Copie o código JSON ou clique em <strong>Baixar .json</strong>.</li>

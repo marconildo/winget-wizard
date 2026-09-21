@@ -66,6 +66,18 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        palette: {
+          cyan: "#18B5D9",
+          aqua: "#04C4D9",
+          orange: "#F28705",
+          mahogany: "#592202",
+          obsidian: "#400D01",
+        },
+      },
+      backgroundImage: {
+        "gradient-brand": "linear-gradient(135deg, #18B5D9 0%, #04C4D9 100%)",
+        "gradient-solar": "linear-gradient(135deg, #F28705 0%, #FFA834 100%)",
+        "gradient-ember": "linear-gradient(180deg, #592202 0%, #400D01 100%)",
       },
       borderRadius: {
         lg: "var(--radius)",

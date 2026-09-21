@@ -21,11 +21,11 @@ const catIcons = {
 };
 
 const catColors: Record<string, string> = {
-  browsers: "bg-blue-100 text-blue-600",
-  development: "bg-violet-100 text-violet-600",
-  utilities: "bg-amber-100 text-amber-600",
-  communication: "bg-green-100 text-green-600",
-  multimedia: "bg-rose-100 text-rose-600",
+  browsers: "bg-palette-cyan/15 text-palette-cyan",
+  development: "bg-palette-aqua/15 text-palette-aqua",
+  utilities: "bg-palette-orange/15 text-palette-orange",
+  communication: "bg-emerald-500/15 text-emerald-600",
+  multimedia: "bg-rose-500/15 text-rose-600",
 };
 
 interface PackageManagerRow {
@@ -121,12 +121,12 @@ export function PackageDetailsModal({ app, open, selected, onClose, onToggle }: 
         <div className="mt-4 flex justify-end">
           <Button
             onClick={handleToggle}
-            variant={selected ? "outline" : "default"}
+            variant={selected ? "outline" : "cyan"}
             className={cn(
-              "gap-2",
+              "gap-2 font-semibold",
               selected
-                ? "border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400"
-                : "bg-blue-600 hover:bg-blue-700 text-white"
+                ? "border-destructive/40 text-destructive hover:bg-destructive/10 hover:border-destructive/60"
+                : ""
             )}
           >
             {selected ? (

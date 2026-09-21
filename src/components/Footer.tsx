@@ -9,7 +9,7 @@ export function Footer() {
           href="https://curriculo-online-indol.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-foreground hover:text-blue-600 inline-flex items-center gap-1 transition-colors"
+          className="font-medium text-foreground hover:text-palette-cyan inline-flex items-center gap-1 transition-colors"
         >
           Cristiano Grobério
           <ExternalLink className="h-3 w-3" />
@@ -19,7 +19,7 @@ export function Footer() {
         href="https://github.com/djcristianosgp/winget-wizard"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-1.5 font-medium text-foreground hover:text-blue-600 transition-colors"
+        className="flex items-center gap-1.5 font-medium text-foreground hover:text-palette-cyan transition-colors"
       >
         <Github className="h-3.5 w-3.5" />
         djcristianosgp/winget-wizard

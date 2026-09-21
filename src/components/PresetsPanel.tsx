@@ -31,7 +31,7 @@ export function PresetsPanel({ onApply }: Props) {
           )}
           title={preset.description}
         >
-          <span className="flex items-center justify-center h-6 w-6 rounded-md bg-white/10 text-sidebar-foreground/60 group-hover:bg-blue-500/30 group-hover:text-blue-300 transition-colors shrink-0">
+          <span className="flex items-center justify-center h-6 w-6 rounded-md bg-white/10 text-sidebar-foreground/60 group-hover:bg-palette-cyan/20 group-hover:text-palette-aqua transition-colors shrink-0">
             {presetIcons[preset.icon ?? "Package"] ?? <Package className="h-3.5 w-3.5" />}
           </span>
           <span className="flex-1 min-w-0">
