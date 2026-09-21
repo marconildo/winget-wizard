@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Search, CheckSquare, XSquare, Package, RefreshCw, Menu, X, Zap, Loader2, Copy, Check, Monitor, Apple, Terminal, Share2, HardDrive } from "lucide-react";
+import { Search, CheckSquare, XSquare, Package, RefreshCw, Menu, X, Zap, Loader2, Copy, Check, Monitor, Apple, Terminal, Share2, HardDrive, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CategorySidebar } from "@/components/CategorySidebar";
@@ -10,6 +10,7 @@ import { PresetsPanel } from "@/components/PresetsPanel";
 import { SetupHistoryPanel } from "@/components/SetupHistoryPanel";
 import { UpgradeTab } from "@/components/UpgradeTab";
 import { OsCatalogTab } from "@/components/OsCatalogTab";
+import { McpTab } from "@/components/McpTab";
 import { Footer } from "@/components/Footer";
 import { SupportButton } from "@/components/SupportButton";
 import { useQuickSetup } from "@/hooks/useQuickSetup";
@@ -17,7 +18,7 @@ import { useSetupHistory, type SetupEntry } from "@/hooks/useSetupHistory";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 
-type Tab = "install" | "upgrade" | "os-catalog";
+type Tab = "install" | "upgrade" | "os-catalog" | "mcp";
 
 export default function QuickSetupApp() {
   const qs = useQuickSetup();
@@ -130,6 +131,16 @@ export default function QuickSetupApp() {
             }`}
           >
             <HardDrive className="h-3.5 w-3.5" /> S.O.
+          </button>
+          <button
+            onClick={() => setTab("mcp")}
+            className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 ${
+              tab === "mcp"
+                ? "bg-blue-500/20 text-blue-300 shadow-inner"
+                : "text-sidebar-foreground/70 hover:bg-white/8 hover:text-sidebar-foreground"
+            }`}
+          >
+            <Sparkles className="h-3.5 w-3.5" /> MCP
           </button>
         </div>
 
@@ -466,8 +477,10 @@ export default function QuickSetupApp() {
                 onLinuxDistroChange={qs.setLinuxDistro}
               />
             </main>
-          ) : (
+          ) : tab === "os-catalog" ? (
             <OsCatalogTab />
+          ) : (
+            <McpTab />
           )}
         </div>
 
